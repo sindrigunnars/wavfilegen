@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
     float dur = 0; // Counts the duration of the file
     int freq;
 
-    fout.seekp(44); // goes to the 44th byte where the sound data begins
+    fout.seekp(44, ios::beg); // goes to the 44th byte where the sound data begins
 
     while (fin) {
         fin >> key;
@@ -140,11 +140,11 @@ int main(int argc, char* argv[]) {
     }
 
     int samples = dur * sampleRate;
-    fout.seekp(40);
+    fout.seekp(40, ios::beg);
     int subChunkSize2 = samples * numChannels * subChunkSize1/8; // 40-44, size of data chunk
     writeint(fout, subChunkSize2);
 
-    fout.seekp(4);
+    fout.seekp(4, ios::beg);
     unsigned int chunkSize = 36 + subChunkSize2; // size of file 4-8
     writeint(fout, chunkSize); // Overwrites the default (40) size of the file
 
